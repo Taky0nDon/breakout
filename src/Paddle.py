@@ -1,6 +1,5 @@
 import turtle as t
-
-
+# Paddle is 160 wide and 100 tall
 class Paddle(t.Turtle):
     def __init__(self, start_x: int|float , start_y: int|float):
         super().__init__()
