@@ -1,7 +1,9 @@
+from random import randint
 import turtle as t
 from Board import Board
 from Paddle import Paddle
 from Ball import Ball
+from Bricks import Brick, BrickManager
 
 
 def setup(board: Board) -> Board:
@@ -22,8 +24,13 @@ def setup_paddle_control(paddle: Paddle):
 
 
 board = setup(Board())
-paddle = Paddle(start_x=0, start_y=board.bottom)
+brick_manager = BrickManager()
+paddle = Paddle(start_x=0, start_y=board.bottom, board=board)
 ball = Ball()
+brick_x = board.width//2 * -1
+for n in range(10):
+    brick_manager.spawn_brick(x=brick_x, y=0)
+    brick_x += brick_manager.bricks[0].width*20
 setup_paddle_control(paddle)
 
 board.screen.exitonclick()
