@@ -1,11 +1,17 @@
 import turtle as t
+
+from Board import Board
 # Paddle is 160 wide and 100 tall
 class Paddle(t.Turtle):
-    def __init__(self, start_x: int|float , start_y: int|float):
+    def __init__(self, start_x: int|float,
+                 start_y: int|float,
+                 board: Board) -> None:
         super().__init__()
-        self.shape("square")
-        self.shapesize(0.5, 8)
+        self.board = board
+        self.paddle_width = round(self.board.width*.05*.2, 0)
         self.penup()
+        self.shape("square")
+        self.shapesize(0.5, self.paddle_width)
         self.goto(start_x, start_y)
 
     def move_right(self):
