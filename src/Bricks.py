@@ -12,6 +12,9 @@ class Brick(t.Turtle):
         self.height = round(board.height * .05 * .07, 0)
         self.height_px = self.height * 20
         self.gap = self.width # This is the same as multiplying width by 20 and .05
+        self.left_edge = 0
+        self.right_edge = 0
+        self.bottom_edge = 0
         self.penup()
         self.shape("square")
         self.shapesize(self.height, self.width)
@@ -21,13 +24,21 @@ class BrickManager:
     bricks = []
     vertical_gap = 20
 
+    @classmethod
+    def destroy_brick(cls, brick: Brick):
+        cls.bricks.remove(brick)
+        del(brick)
 
     @classmethod
     def spawn_brick(cls, x: int|float, y:int|float, board: Board=Board()) -> None:
         new_brick = Brick(board)
         new_brick.hideturtle()
         new_brick.goto(x, y)
+        new_brick.bottom_edge = int(new_brick.pos()[1] - (new_brick.height_px  // 2))
+        new_brick.left_edge = int(new_brick.pos()[0] - (new_brick.width_px // 2))
+        new_brick.right_edge = int(new_brick.pos()[0] + (new_brick.width_px // 2))
         new_brick.showturtle()
+        print(f"Brick spawned at {new_brick.pos()}")
         cls.bricks.append(new_brick)
 
 
