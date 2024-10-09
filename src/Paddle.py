@@ -8,10 +8,13 @@ class Paddle(t.Turtle):
                  board: Board) -> None:
         super().__init__()
         self.board = board
-        self.paddle_width = round(self.board.width*.05*.2, 0)
+        self.paddle_length = round(self.board.width*.05*.2, 0)
+        self.paddle_height = 0.5
+        self.height_px = 10
+        self.width_px = self.paddle_length * 20
         self.penup()
         self.shape("square")
-        self.shapesize(0.5, self.paddle_width)
+        self.shapesize(self.paddle_height, self.paddle_length)
         self.goto(start_x, start_y)
 
     def move_right(self):

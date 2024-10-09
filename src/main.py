@@ -1,6 +1,6 @@
 from random import randint
 import turtle as t
-from Board import Board
+from Board import BOTTOM_MARGIN, Board
 from Paddle import Paddle
 from Ball import Ball
 from Bricks import Brick, BrickManager
@@ -12,25 +12,39 @@ def setup(board: Board) -> Board:
     pen = t.Turtle()
     pen.hideturtle()
     pen.penup()
-    pen.goto(board.width/2*-.95, board.height/2*-.95)
+    pen.goto(board.left_edge, board.bottom)
     pen.pendown()
     pen.write("Press q to quit")
+    pen.goto
     pen.penup()
     return board
-    
+
+
 def setup_paddle_control(paddle: Paddle):
-    board.screen.onkey(fun=paddle.move_right, key="l")
-    board.screen.onkey(fun=paddle.move_left, key="h")
+    game_board.screen.onkey(fun=paddle.move_right, key="l")
+    game_board.screen.onkey(fun=paddle.move_left, key="h")
 
 
-board = setup(Board())
+game_being_played: bool = True
+game_board = setup(Board())
 brick_manager = BrickManager()
-paddle = Paddle(start_x=0, start_y=board.bottom, board=board)
+player = Paddle(start_x=0, start_y=game_board.bottom, board=game_board)
 ball = Ball()
-brick_x = board.width//2 * -1
-for n in range(10):
-    brick_manager.spawn_brick(x=brick_x, y=0)
-    brick_x += brick_manager.bricks[0].width*20
-setup_paddle_control(paddle)
+# brick_manager.build_bricks(n=3, board=game_board)
+setup_paddle_control(player)
+print(ball.turtlesize())
+collisions = 0
+while game_being_played:
+    ball.move_ball()
+    if ball.collided_with_paddle(player):
+        if collisions > 1:
+            game_being_played = False
+        else:
+            print("ball should be bouncing now")
+            ball.bounce_back()
+            collisions += 1
+print(ball.pos())
+print(player.pos())
 
-board.screen.exitonclick()
+
+game_board.screen.exitonclick()
