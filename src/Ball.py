@@ -35,17 +35,17 @@ class Ball(t.Turtle):
         if vertical_collision and in_horiz_bounds:
             return True
         
-    def bounce_back(self):
-        print(f"{self.heading()=}")
-        self.change_heading(self.heading())
-
-    def change_heading(self, initial_h):
-        self.speed(0)
-        heading_map = {
-                270: 90,
-                90: 270,
-                315: 225,
-                225: 315,
+    def bounce_back(self, direction):
+        dir_heading_map = {
+                "up": 90,
+                "down": 270,
+                "left": 135,
+                "right": 45,
                 }
-        new_h = heading_map[initial_h]
+        print(f"{self.heading()=}")
+        self.change_heading(dir_heading_map[direction])
+
+    def change_heading(self, new_h):
+        self.speed(0)
         self.seth(new_h) 
+        self.speed(1)

@@ -31,12 +31,15 @@ game_board.screen.onkey(fun=quit, key="q")
 while game_being_played:
     ball.move_ball()
     if ball.collided_with_paddle(player):
-        ball.bounce_back()
+        if ball.pos()[0] < player.pos()[0]:
+            ball.bounce_back("left")
+        else:
+            ball.bounce_back("up")
     for brick in brick_manager.bricks:
         if ball.collided_with_brick(brick):
             brick.ht()
             brick_manager.destroy_brick(brick)
-            ball.bounce_back()
+            ball.bounce_back("down")
 
 
 game_board.screen.exitonclick()
