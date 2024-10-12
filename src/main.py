@@ -29,10 +29,15 @@ brick_manager.build_bricks(n=1, board=game_board)
 game_being_played: bool = True
 game_board.screen.onkey(fun=quit, key="q")
 while game_being_played:
+    ball_x, ball_y = ball.pos()
     ball.move_ball()
+    if ball.collided_with_wall(game_board):
+        ball.bounce_back("right")
     if ball.collided_with_paddle(player):
-        if ball.pos()[0] < player.pos()[0]:
+        if ball_x < player.pos()[0]:
             ball.bounce_back("left")
+        elif ball_x > player.pos()[1]:
+            ball.bounce_back("right")
         else:
             ball.bounce_back("up")
     for brick in brick_manager.bricks:

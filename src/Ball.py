@@ -1,5 +1,6 @@
 import turtle as t
 from math import floor
+from Board import Board
 from Paddle import Paddle
 from Bricks import Brick
 
@@ -35,6 +36,12 @@ class Ball(t.Turtle):
         if vertical_collision and in_horiz_bounds:
             return True
         
+    def collided_with_wall(self, board: Board):
+        ball_x, ball_y = self.pos()
+        if ball_x <= board.left_edge\
+                or ball_x >= board.right_edge\
+                or ball_y >= board.upper_edge:
+            return True
     def bounce_back(self, direction):
         dir_heading_map = {
                 "up": 90,
