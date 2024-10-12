@@ -37,8 +37,6 @@ while game_being_played:
             brick.ht()
             brick_manager.destroy_brick(brick)
             ball.bounce_back()
-print(ball.pos())
-print(player.pos())
 
 
 game_board.screen.exitonclick()

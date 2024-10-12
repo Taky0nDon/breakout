@@ -38,7 +38,6 @@ class BrickManager:
         new_brick.left_edge = int(new_brick.pos()[0] - (new_brick.width_px // 2))
         new_brick.right_edge = int(new_brick.pos()[0] + (new_brick.width_px // 2))
         new_brick.showturtle()
-        print(f"Brick spawned at {new_brick.pos()}")
         cls.bricks.append(new_brick)
 
 
