@@ -8,7 +8,7 @@ class Board():
         self.screen.bgcolor("red")
         self.width = self.screen.window_width()
         self.height = self.screen.window_height()
-        self.upper_edge = self.height/2 * MARGIN
+        self.upper_edge = self.height/2 - 10
         self.right_edge = self.width/2 * MARGIN
         self.left_edge = self.right_edge * -1
         self.bottom = self.height/-2*BOTTOM_MARGIN

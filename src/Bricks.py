@@ -15,6 +15,7 @@ class Brick(t.Turtle):
         self.left_edge = 0
         self.right_edge = 0
         self.bottom_edge = 0
+        self.top_edge = 0
         self.penup()
         self.shape("square")
         self.shapesize(self.height, self.width)
@@ -35,6 +36,7 @@ class BrickManager:
         new_brick.hideturtle()
         new_brick.goto(x, y)
         new_brick.bottom_edge = int(new_brick.pos()[1] - (new_brick.height_px  // 2))
+        new_brick.top_edge = int(new_brick.pos()[1] + (new_brick.height_px  // 2))
         new_brick.left_edge = int(new_brick.pos()[0] - (new_brick.width_px // 2))
         new_brick.right_edge = int(new_brick.pos()[0] + (new_brick.width_px // 2))
         new_brick.showturtle()
