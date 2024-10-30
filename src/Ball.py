@@ -13,12 +13,9 @@ class Ball(t.Turtle):
         self.shape("circle")
         self.speed(BASE_SPEED)
         self.seth(270)
-        self.x_change = 0
-        self.y_change = -0.9
 
     def move_ball(self):
         self.forward(3)
-        # self.goto(0, self.pos()[1] + self.y_change)
 
     def collided_with_paddle(self, other: Brick | Paddle) -> bool:
         ball_y = self.pos()[1]
@@ -29,12 +26,20 @@ class Ball(t.Turtle):
             return True
         return False
 
-    def collided_with_brick(self, other: Brick) -> bool:
+    def collided_with_brick(self, other: Brick) -> tuple[bool, str]:
         ball_x, ball_y = self.pos()
-        if ball_y > other.bottom_edge and ball_y < other.top_edge and \
-                ball_x > other.left_edge and ball_x < other.right_edge:
-                    return True
-        return False
+        dist_from_ball_to_bottom = int(other.bottom_edge - ball_y)
+        dist_from_ball_to_top = int(other.top_edge - ball_y)
+        ball_in_horizontal_bounds = ball_x >= other.left_edge\
+                and ball_x <= other.right_edge
+        hit_bottom =  dist_from_ball_to_bottom in range(0, 11) and ball_in_horizontal_bounds
+        hit_top = dist_from_ball_to_top in range(-10,1) and ball_in_horizontal_bounds
+        if hit_bottom:
+            return True, 'b'
+        elif hit_top:
+            return True, 't'
+        else:
+            return False
 
     def collided_with_wall(self, board: Board) -> str:
         """ Returns a string representing which edge of the board the ball hit"""
@@ -73,15 +78,18 @@ class Ball(t.Turtle):
                     left_wall_heading_change[initial_heading]
                     )
 
-        if surface == "R":
+        elif surface == "R":
             self.change_heading(
                     right_wall_heading_change[initial_heading]
                     )
 
-        if surface == "T":
+        elif surface == "T":
             self.change_heading(
                     ceiling_heading_change[initial_heading]
                     )
+
+        elif surface == "b":
+            self.change_heading(self.heading() - 180.0)
 
 
     def change_heading(self, new_h: float):

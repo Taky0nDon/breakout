@@ -41,10 +41,12 @@ while game_being_played:
         else:
             ball.change_heading(90)
     for brick in brick_manager.bricks:
-        if ball.collided_with_brick(brick):
-            brick.ht()
-            brick_manager.destroy_brick(brick)
-            ball.bounce_back("down")
+        brick_hit = ball.collided_with_brick(brick)
+        if brick_hit:
+            print("bouncing")
+            brick.ht()  # Brick disappears
+            brick_manager.destroy_brick(brick)  # Brick object deleted.
+            ball.bounce_back(brick_hit[1])
 
 
 game_board.screen.exitonclick()

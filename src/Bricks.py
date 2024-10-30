@@ -3,7 +3,7 @@ import turtle as t
 from Board import Board
 
 class Brick(t.Turtle):
-    def __init__(self, board: Board=Board()) -> None:
+    def __init__(self, board: Board) -> None:
         super().__init__()
         self.speed(0)
         self.board = board
@@ -31,7 +31,7 @@ class BrickManager:
         del(brick)
 
     @classmethod
-    def spawn_brick(cls, x: int|float, y:int|float, board: Board=Board()) -> None:
+    def spawn_brick(cls, x: int|float, y:int|float, board: Board) -> None:
         new_brick = Brick(board)
         new_brick.hideturtle()
         new_brick.goto(x, y)
