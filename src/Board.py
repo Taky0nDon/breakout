@@ -18,3 +18,6 @@ class Board():
         self.screen.listen()
         self.screen.onkey(fun=quit, key="q")
 
+    def game_over(self):
+        t.color("white")
+        t.write("YOU LOST.")

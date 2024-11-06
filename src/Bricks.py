@@ -20,6 +20,27 @@ class Brick(t.Turtle):
         self.shape("square")
         self.shapesize(self.height, self.width)
 
+    @classmethod
+    def return_side_hit_by_ball(cls, brick, ball: t.Turtle) -> str:
+        ball_x, ball_y = ball.pos()
+        brick_x, brick_y = brick.pos()
+        brick_w = brick.width_px // 2
+        brick_h = brick.height_px // 2
+        bottom_left_corner = brick_x - brick_w, brick_y - brick_h
+        bottom_right_corner = brick_x + brick_w, brick_y - brick_h
+        top_left_corner = brick_x - brick_w, brick_y + brick_h
+        top_right_corner = brick_x + brick_w, brick_y + brick_h
+        if ball_y > brick_y + brick_h:
+            return "top"
+        if ball_y < brick_y - brick_h:
+            return "bottom"
+        if ball_x < brick_x - brick_w:
+            return "left"
+        if ball_x > brick_x + brick_w:
+            return "right"
+        else:
+            return ""
+
 class BrickManager:
     margin = 0.9
     bricks = []
@@ -47,10 +68,10 @@ class BrickManager:
     def make_line(cls, board: Board, y: int|float, x_offset: int|float):
         next_brick_position_x = board.left_edge + x_offset
         cls.spawn_brick(next_brick_position_x, y, board)
-        current_brick_position_x = 20 * cls.bricks[0].width + cls.bricks[0].gap
         while next_brick_position_x < board.right_edge:
-            cls.spawn_brick(next_brick_position_x, y, board)
+            current_brick_position_x = 20 * cls.bricks[0].width + cls.bricks[0].gap
             next_brick_position_x += current_brick_position_x
+            cls.spawn_brick(next_brick_position_x, y, board)
 
     @classmethod
     def build_bricks(cls, n: int, board: Board):
